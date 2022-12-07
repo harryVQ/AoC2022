@@ -1,0 +1,35 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	input, _ := os.Open("input.txt")
+	defer input.Close()
+	sc := bufio.NewScanner(input)
+
+	overlap := 0
+
+	for sc.Scan() {
+		line := sc.Text()
+		sections := strings.Split(line, ",")
+
+		section1 := strings.Split(sections[0], "-")
+		section2 := strings.Split(sections[1], "-")
+
+		start1, _ := strconv.Atoi(section1[0])
+		finish1, _ := strconv.Atoi(section1[1])
+		start2, _ := strconv.Atoi(section2[0])
+		finish2, _ := strconv.Atoi(section2[1])
+
+		if !(finish1 < start2 || finish2 < start1) {
+			overlap++
+		}
+	}
+	fmt.Println(overlap)
+}
